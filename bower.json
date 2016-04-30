@@ -1,0 +1,22 @@
+﻿{
+  "name": "data-mask",
+  "version": "0.0.1",
+  "homepage": "https://github.com/scokmen/data-mask#readme",
+  "authors": [
+    "Soner Çökmen <sonercokmen@gmail.com>"
+  ],
+  "description": "A small string mask library.",
+  "main": "src/data-mask.js",
+  "keywords": [
+    "data",
+    "string",
+    "mask"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test/*.js",
+    "package.json"
+  ]
+}
