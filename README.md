@@ -10,8 +10,8 @@ A small string mask library.
  * options parameter is optional in the constructor.
  */
 var dataMasker = new DataMasker('lorem ipsum', options); //options is optional
-var output1 = dataMasker.maskLeft(2); //"**rem **sum"
-var output2 = dataMasker.maskRight(2); //"lor** ips**"
+var output1 = dataMasker.maskLeft(2);   //"**rem **sum"
+var output2 = dataMasker.maskRight(2);  //"lor** ips**"
 var output3 = dataMasker.maskRamdom(2); //"lo*e* ip**m" etc (random chars)
 
 //options can be override on function call

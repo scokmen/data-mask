@@ -8,6 +8,7 @@
     }
 }(this, function () {
 
+    //Object defaults.
     var DEFAULT_MASK_CHAR = '*';
     var DEFAULT_DELIMINATOR = ' ';
     var RANDOM_MASK_RANGE = 0;
@@ -20,27 +21,23 @@
         return str !== null && typeof str === 'string';
     }
 
-    //Build char string with given char and length;
+    //Build char string with given character and length.
     function buildCharString(char, length) {
-        var charStr = '';
-        if (length <= 0) {
-            return charStr;
-        }
-        for (var i = 0; i < length; i++) {
-            charStr += char;
-        }
-        return charStr;
+        return Array(length + 1).join(char);
     }
 
-    //Build integer array and shuffle.
+    //Build integer array from zero to length.
     function buildIndexArray(length) {
-        var array = [];
-        if(length <= 0){
-            return array;
+        var array = new Array(length);
+        for (var i = 0; i < length; i++) {
+            array[i] = i;
         }
-        for(var i = 0; i < length; i++){
-            array.push(i);
-        }
+        return array;
+    }
+
+    //Build scrambled integer array from zero to length.
+    function buildRandomIndexArray(length) {
+        var array = buildIndexArray(length);
         var index = array.length, temp, rnd;
         while (0 !== index) {
             rnd = Math.floor(Math.random() * index);
@@ -54,22 +51,22 @@
 
     //Mask the given token by parameters.
     function maskToken(token, maskChar, maskCount, direction) {
-        if (maskCount <= 0) {
+        if (maskCount === 0) {
             return token;
         }
         else if (token.length - maskCount <= 0) {
             return buildCharString(maskChar, token.length);
         }
         
-        if (direction == FORWARD_MASKING) {
+        if (direction === FORWARD_MASKING) {
             return buildCharString(maskChar, maskCount) + token.substr(maskCount);
         }
-        else if (direction == BACKWARD_MASKING) {
+        else if (direction === BACKWARD_MASKING) {
             return token.substr(0, token.length - maskCount) + buildCharString(maskChar, maskCount);
         }
         else {
             var tokenClone = '';
-            var indexArray = buildIndexArray(token.length).slice(0, maskCount);
+            var indexArray = buildRandomIndexArray(token.length).slice(0, maskCount);
             for (var i = 0; i < token.length; i++) {
                 if (indexArray.indexOf(i) > -1) {
                     tokenClone += maskChar;
@@ -91,7 +88,7 @@
 
         //Is parameter a valid mask char?
         DataMasker.prototype.isValidMaskChar = function(maskChar) {
-            return isString(maskChar) && maskChar.length == 1;
+            return isString(maskChar) && maskChar.length === 1;
         }
 
         //Is parameter a valid deliminator?
@@ -125,23 +122,23 @@
             var opDirection = this.isValidMaskDirection(direction) ? direction : this.maskOptions.direction;
 
             var tokens = this.maskSource.split(opDeliminator);
-            var maskedTokens = [];
+            var maskedTokens = new Array(tokens.length);
             for (var i = 0; i < tokens.length; i++) {
                 var tokenRange = 0;
-                if (tokens[i].length == 0) {
+                if (tokens[i].length === 0) {
                     maskedTokens.push(tokens[i]);
                     continue;
                 }
-                if (opRange == RANDOM_MASK_RANGE) {
-                    tokenRange = Math.floor(Math.random() * 1000000) % tokens[i].length + 1;
+                if (opRange === RANDOM_MASK_RANGE) {
+                    tokenRange = (Math.floor(Math.random() * 1000000) % tokens[i].length) + 1;
                 }
                 else if (opRange < 1.0) {
                     tokenRange = Math.floor(opRange * tokens[i].length);
                 }
                 else {
-                    tokenRange = opRange;
+                    tokenRange = Math.floor(opRange);
                 }
-                maskedTokens.push(maskToken(tokens[i], opMaskChar, tokenRange, opDirection));
+                maskedTokens[i] = maskToken(tokens[i], opMaskChar, tokenRange, opDirection);
             }
 
             return maskedTokens.join(opDeliminator);
