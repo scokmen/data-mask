@@ -27,6 +27,7 @@ describe('data-mask unit test', function () {
             expect(dataMask.isValidDeliminator(undefined)).toBe(false);
             expect(dataMask.isValidDeliminator({})).toBe(false);
             expect(dataMask.isValidDeliminator('')).toBe(false);
+            expect(dataMask.isValidDeliminator([])).toBe(false);
             //expect true.
             expect(dataMask.isValidDeliminator('*')).toBe(true);
             expect(dataMask.isValidDeliminator('xy')).toBe(true);
@@ -63,6 +64,54 @@ describe('data-mask unit test', function () {
             expect(dataMask.isValidMaskDirection(-1)).toBe(true);
             expect(dataMask.isValidMaskDirection(0)).toBe(true);
             expect(dataMask.isValidMaskDirection(1)).toBe(true);
+        });
+    });
+
+    describe('mask functions', function () {
+
+        //unit test for maskLeft function
+        it('maskLeft()', function () {
+            var dataMask = new DataMasker('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.');
+
+            //expect true
+            expect(dataMask.maskLeft(2)).toBe('**rem **sum **lor **t **et, **nsectetur **ipiscing **it. **d **rmentum **it **t **et **trum **rmentum.');
+            expect(dataMask.maskLeft(3)).toBe('***em ***um ***or *** ***t, ***sectetur ***piscing ***t. *** ***mentum ***t *** ***t ***rum ***mentum.');
+            expect(dataMask.maskLeft(4, ' ', '#')).toBe('####m ####m ####r ### ####, ####ectetur ####iscing ####. ### ####entum #### ### #### ####um ####entum.');
+        });
+
+        //unit test for maskRight function
+        it('maskRight()', function () {
+            var dataMask = new DataMasker('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.');
+
+            //expect true
+            expect(dataMask.maskRight(1)).toBe('Lore* ipsu* dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
+            expect(dataMask.maskRight(2, ' ', '#')).toBe('Lor## ips## dol## s## ame## consectet## adipisci## eli## S## ferment## el## s## am## rutr## fermentu##');
+        });
+
+        //unit test for maskRandom function
+        it('maskRandom()', function () {
+            var maskSource = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
+            var dataMask = new DataMasker(maskSource);
+            var tokenCount = maskSource.split(' ').length;
+
+            for (var i = 1; i < 4; i++) {
+                output = dataMask.maskRandom(i);
+                maskCharCount = (output.match(new RegExp('\\*','g')) || []).length;
+                expect(maskCharCount).toBe(tokenCount * i);
+            }
+        });
+
+        //unit test for helper functions.
+        it('helper functions', function () {
+            
+            var getRandomMaskLength = function (tokenLength) {
+                return Math.floor(Math.random() * 1000000) % tokenLength + 1;
+            }
+
+            for (i = 1; i < 1000; i++) {
+                var calculatedLength = getRandomMaskLength(i);
+                expect(0 <= calculatedLength && calculatedLength <= i).toBeTruthy();
+            }
         });
     });
 });
