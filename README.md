@@ -18,9 +18,10 @@ var output3 = dataMasker.maskRamdom(2); //"lo*e* ip**m" etc (random chars)
 var output4 = dataMasker.maskLeft(2, ' ', '#');   //"##rem ##sum"
 var output5 = dataMasker.maskRight(2, ' ', '@');  //"lor@@ ips@@"
 var output6 = dataMasker.maskRamdom(2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
+var output7 = dataMasker.maskLeft(2, 4, '?');     //"??re??ip??m"" (fixed chuks)
 
 //or just call mask function
-var output7 = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
+var output8 = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
 ```
 
 Options       | Description
