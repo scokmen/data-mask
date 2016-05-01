@@ -26,7 +26,7 @@ var output7 = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
 Options       | Description
 --- | ---
 `maskChar`    | An one-length string used for mask (Default `*`)
-`deliminator` | A deliminator string (Default `' '`)
+`deliminator` | A deliminator string or integer for fixed chunks (Default `' '` or min `1`)
 `direction  ` | Mask positions. Left, right or random chars "1, -1, 0" (Default `1`)
 `range`       | Mask character count or percentage for token (0 < range < 1), range=0 is random character count.
 

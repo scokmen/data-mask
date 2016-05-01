@@ -16,9 +16,14 @@
     var RANDOM_MASKING = 0;
     var FORWARD_MASKING = 1;
 
-    //Is parameter a valid string object?
+    //Is parameter a valid string?
     function isString(str) {
         return str !== null && typeof str === 'string';
+    }
+
+    //Is parameter a valid number?
+    function isNumber(num) {
+        return num !== null && !isNaN(num) && isFinite(num) && typeof num == 'number';
     }
 
     //Build char string with given character and length.
@@ -26,7 +31,7 @@
         return Array(length + 1).join(char);
     }
 
-    //Build integer array from zero to length.
+    //Build integer array from zero to given length.
     function buildIndexArray(length) {
         var array = new Array(length);
         for (var i = 0; i < length; i++) {
@@ -35,7 +40,7 @@
         return array;
     }
 
-    //Build scrambled integer array from zero to length.
+    //Build scrambled integer array from zero to given length.
     function buildRandomIndexArray(length) {
         var array = buildIndexArray(length);
         var index = array.length, temp, rnd;
@@ -49,6 +54,14 @@
         return array;
     }
 
+    //Split the mask source by given deliminator.
+    function splitMaskSource(maskSource, deliminator) {
+        if (isString(deliminator)) {
+            return maskSource.split(deliminator);
+        }
+        return maskSource.match(new RegExp('.{1,' + Math.floor(deliminator) + '}', 'g'));
+    }
+
     //Mask the given token by parameters.
     function maskToken(token, maskChar, maskCount, direction) {
         if (maskCount === 0) {
@@ -57,7 +70,6 @@
         else if (token.length - maskCount <= 0) {
             return buildCharString(maskChar, token.length);
         }
-        
         if (direction === FORWARD_MASKING) {
             return buildCharString(maskChar, maskCount) + token.substr(maskCount);
         }
@@ -93,7 +105,8 @@
 
         //Is parameter a valid deliminator?
         DataMasker.prototype.isValidDeliminator = function (deliminator) {
-            return isString(deliminator) && deliminator.length > 0;
+            return (isString(deliminator) && deliminator.length > 0) ||
+                   (isNumber(deliminator) && deliminator > 0);
         }
 
         //Is parameter a valid mask range?
@@ -121,7 +134,7 @@
             var opRange = this.isValidRange(range) ? range : this.maskOptions.range;
             var opDirection = this.isValidMaskDirection(direction) ? direction : this.maskOptions.direction;
 
-            var tokens = this.maskSource.split(opDeliminator);
+            var tokens = splitMaskSource(this.maskSource, opDeliminator);
             var maskedTokens = new Array(tokens.length);
             for (var i = 0; i < tokens.length; i++) {
                 var tokenRange = 0;
@@ -141,7 +154,7 @@
                 maskedTokens[i] = maskToken(tokens[i], opMaskChar, tokenRange, opDirection);
             }
 
-            return maskedTokens.join(opDeliminator);
+            return maskedTokens.join(isString(opDeliminator) ? opDeliminator : '');
         }
 
         DataMasker.prototype.maskLeft = function (range, deliminator, maskChar) {
