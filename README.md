@@ -1,6 +1,14 @@
 # data-mask
 A small string masking library in javascript.
 
+## INSTALLATION
+
+**With bower:**
+
+```javascript
+bower install --save data-mask
+```
+
 ## USAGE
 
  **Use it by using DataMasker instance with plain text:**

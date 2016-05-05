@@ -16,7 +16,7 @@
   "ignore": [
     "node_modules",
     "bower_components",
-    "test/*.*",
+    "spec/*.*",
     "package.json"
   ]
 }
