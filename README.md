@@ -9,6 +9,12 @@ A small string masking library in javascript.
 bower install --save data-mask
 ```
 
+**With npm:**
+
+```javascript
+npm install --save data-mask
+```
+
 ## USAGE
 
  **Use it by using DataMasker instance with plain text:**
