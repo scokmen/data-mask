@@ -1,11 +1,11 @@
-﻿{
+{
   "name": "data-mask",
   "version": "0.0.1",
   "homepage": "https://github.com/scokmen/data-mask#readme",
   "authors": [
     "Soner Çökmen <sonercokmen@gmail.com>"
   ],
-  "description": "A small string mask library.",
+  "description": "A small string masking library in javascript.",
   "main": "src/data-mask.js",
   "keywords": [
     "data",
@@ -16,7 +16,7 @@
   "ignore": [
     "node_modules",
     "bower_components",
-    "test/*.js",
+    "test/*.*",
     "package.json"
   ]
 }

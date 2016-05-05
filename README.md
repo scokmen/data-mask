@@ -25,7 +25,7 @@ var output8 = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
 
 //also static calls available.
 var output9  = DataMasker.maskLeft('lorem ipsum', 2, ' ', '#');   //"##rem ##sum"
-var output10  = DataMasker.maskRight('lorem ipsum', 2, ' ', '@');  //"lor@@ ips@@"
+var output10 = DataMasker.maskRight('lorem ipsum', 2, ' ', '@');  //"lor@@ ips@@"
 var output11 = DataMasker.maskRandom('lorem ipsum', 2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
 var output12 = DataMasker.maskLeft('lorem ipsum', 2, 4, '?');     //"??re??ip??m"" (fixed chuks)
 
