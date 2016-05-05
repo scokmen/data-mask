@@ -91,6 +91,17 @@
         }
     }
 
+    //Invoke given method with params.
+    function invokeStaticMethod(methodName, maskSource, range, deliminator, maskChar, direction) {
+        var maskOptions = {
+            range: range,
+            deliminator: deliminator,
+            maskChar: maskChar,
+            direction: direction
+        };
+        return new DataMasker(maskSource, maskOptions)[methodName](range, deliminator, maskChar);
+    }
+
     var DataMasker = (function () {
 
         function DataMasker(maskSource, maskOptions) {
@@ -99,7 +110,7 @@
         }
 
         //Is parameter a valid mask char?
-        DataMasker.prototype.isValidMaskChar = function(maskChar) {
+        DataMasker.prototype.isValidMaskChar = function (maskChar) {
             return isString(maskChar) && maskChar.length === 1;
         }
 
@@ -110,17 +121,17 @@
         }
 
         //Is parameter a valid mask range?
-        DataMasker.prototype.isValidRange = function(range) {
+        DataMasker.prototype.isValidRange = function (range) {
             return range !== null && range !== '' && !isNaN(range) && isFinite(range) && range >= 0;
         }
 
         //Is parameter a valid mas direction?
-        DataMasker.prototype.isValidMaskDirection = function(direction) {
+        DataMasker.prototype.isValidMaskDirection = function (direction) {
             return [BACKWARD_MASKING, RANDOM_MASKING, FORWARD_MASKING].indexOf(direction) > -1;
         }
 
         //Build object parameters.
-        DataMasker.prototype.buildParams = function(params) {
+        DataMasker.prototype.buildParams = function (params) {
             this.maskOptions = params || {};
             this.maskOptions.maskChar = this.isValidMaskChar(this.maskOptions.maskChar) || DEFAULT_MASK_CHAR;
             this.maskOptions.deliminator = this.isValidDeliminator(this.maskOptions.deliminator) || DEFAULT_DELIMINATOR;
@@ -161,12 +172,24 @@
             return this.mask(range, deliminator, maskChar, FORWARD_MASKING);
         }
 
+        DataMasker.maskLeft = function (maskSource, range, deliminator, maskChar, direction) {
+            return invokeStaticMethod('maskLeft', maskSource, range, deliminator, maskChar, direction);
+        }
+
         DataMasker.prototype.maskRight = function (range, deliminator, maskChar) {
             return this.mask(range, deliminator, maskChar, BACKWARD_MASKING);
         }
 
+        DataMasker.maskRight = function (maskSource, range, deliminator, maskChar, direction) {
+            return invokeStaticMethod('maskRight', maskSource, range, deliminator, maskChar, direction);
+        }
+
         DataMasker.prototype.maskRandom = function (range, deliminator, maskChar) {
             return this.mask(range, deliminator, maskChar, RANDOM_MASKING);
+        }
+
+        DataMasker.maskRandom = function (maskSource, range, deliminator, maskChar, direction) {
+            return invokeStaticMethod('maskRandom', maskSource, range, deliminator, maskChar, direction);
         }
 
         return DataMasker;

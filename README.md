@@ -1,5 +1,5 @@
 # data-mask
-A small string mask library.
+A small string masking library in javascript.
 
 ## USAGE
 
@@ -12,16 +12,23 @@ A small string mask library.
 var dataMasker = new DataMasker('lorem ipsum', options); //options is optional
 var output1 = dataMasker.maskLeft(2);   //"**rem **sum"
 var output2 = dataMasker.maskRight(2);  //"lor** ips**"
-var output3 = dataMasker.maskRamdom(2); //"lo*e* ip**m" etc (random chars)
+var output3 = dataMasker.maskRandom(2); //"lo*e* ip**m" etc (random chars)
 
 //options can be override on function call
 var output4 = dataMasker.maskLeft(2, ' ', '#');   //"##rem ##sum"
 var output5 = dataMasker.maskRight(2, ' ', '@');  //"lor@@ ips@@"
-var output6 = dataMasker.maskRamdom(2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
+var output6 = dataMasker.maskRandom(2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
 var output7 = dataMasker.maskLeft(2, 4, '?');     //"??re??ip??m"" (fixed chuks)
 
 //or just call mask function
 var output8 = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
+
+//also static calls available.
+var output9  = DataMasker.maskLeft('lorem ipsum', 2, ' ', '#');   //"##rem ##sum"
+var output10  = DataMasker.maskRight('lorem ipsum', 2, ' ', '@');  //"lor@@ ips@@"
+var output11 = DataMasker.maskRandom('lorem ipsum', 2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
+var output12 = DataMasker.maskLeft('lorem ipsum', 2, 4, '?');     //"??re??ip??m"" (fixed chuks)
+
 ```
 
 Options       | Description

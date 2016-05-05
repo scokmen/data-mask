@@ -86,35 +86,52 @@ describe('data-mask.js jasmine specs', function () {
 
         //Unit test for maskLeft function
         it('maskLeft()', function () {
-            var dataMask = new DataMasker('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.');
+            var specInput = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
+            var dataMask = new DataMasker(specInput);
 
-            //Expect true.
+            //Instance call.
             expect(dataMask.maskLeft(2)).toBe('**rem **sum **lor **t **et, **nsectetur **ipiscing **it. **d **rmentum **it **t **et **trum **rmentum.');
             expect(dataMask.maskLeft(3)).toBe('***em ***um ***or *** ***t, ***sectetur ***piscing ***t. *** ***mentum ***t *** ***t ***rum ***mentum.');
             expect(dataMask.maskLeft(4, ' ', '#')).toBe('####m ####m ####r ### ####, ####ectetur ####iscing ####. ### ####entum #### ### #### ####um ####entum.');
             expect(dataMask.maskLeft(1, 5, '#')).toBe('#orem#ipsu# dol#r si# ame#, co#sect#tur #dipi#cing#elit# Sed#ferm#ntum#elit#sit #met #utru# fer#entu#.');
+
+            //Static call.
+            expect(DataMasker.maskLeft(specInput, 2)).toBe('**rem **sum **lor **t **et, **nsectetur **ipiscing **it. **d **rmentum **it **t **et **trum **rmentum.');
+            expect(DataMasker.maskLeft(specInput, 3)).toBe('***em ***um ***or *** ***t, ***sectetur ***piscing ***t. *** ***mentum ***t *** ***t ***rum ***mentum.');
+            expect(DataMasker.maskLeft(specInput, 4, ' ', '#')).toBe('####m ####m ####r ### ####, ####ectetur ####iscing ####. ### ####entum #### ### #### ####um ####entum.');
+            expect(DataMasker.maskLeft(specInput, 1, 5, '#')).toBe('#orem#ipsu# dol#r si# ame#, co#sect#tur #dipi#cing#elit# Sed#ferm#ntum#elit#sit #met #utru# fer#entu#.');
         });
 
         //Unit test for maskRight function
         it('maskRight()', function () {
-            var dataMask = new DataMasker('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.');
+            var specInput = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
+            var dataMask = new DataMasker(specInput);
 
-            //Expect true.
+            //Instance call.
             expect(dataMask.maskRight(1)).toBe('Lore* ipsu* dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
             expect(dataMask.maskRight(2, ' ', '#')).toBe('Lor## ips## dol## s## ame## consectet## adipisci## eli## S## ferment## el## s## am## rutr## fermentu##');
             expect(dataMask.maskRight(2, 8, '#')).toBe('Lorem ##sum do##r sit ##et, co##ectetu##adipis##ng eli## Sed f##mentum##lit si##amet r##rum fe##entu##');
+
+            //Static call.
+            expect(DataMasker.maskRight(specInput, 1)).toBe('Lore* ipsu* dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
+            expect(DataMasker.maskRight(specInput, 2, ' ', '#')).toBe('Lor## ips## dol## s## ame## consectet## adipisci## eli## S## ferment## el## s## am## rutr## fermentu##');
+            expect(DataMasker.maskRight(specInput, 2, 8, '#')).toBe('Lorem ##sum do##r sit ##et, co##ectetu##adipis##ng eli## Sed f##mentum##lit si##amet r##rum fe##entu##');
         });
 
         //Unit test for maskRandom function
         it('maskRandom()', function () {
-            var maskSource = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
-            var dataMask = new DataMasker(maskSource);
-            var tokenCount = maskSource.split(' ').length;
+            var specInput = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
+            var dataMask = new DataMasker(specInput);
+            var tokenCount = specInput.split(' ').length;
 
             for (var i = 1; i < 4; i++) {
-                output = dataMask.maskRandom(i);
-                maskCharCount = (output.match(new RegExp('\\*','g')) || []).length;
-                expect(maskCharCount).toBe(tokenCount * i);
+                var output1 = dataMask.maskRandom(i);
+                var output2 = DataMasker.maskRandom(specInput, i);
+                var maskCharCount1 = (output1.match(new RegExp('\\*', 'g')) || []).length;
+                var maskCharCount2 = (output2.match(new RegExp('\\*', 'g')) || []).length;
+
+                expect(maskCharCount1).toBe(tokenCount * i);
+                expect(maskCharCount2).toBe(tokenCount * i);
             }
         });
     });
