@@ -84,6 +84,26 @@ describe('data-mask.js jasmine specs', function () {
 
     describe('mask functions', function () {
 
+        var beforeMask = function (token, range, maskChar, deliminator) {
+            if (token == 'Lorem') {
+                return 'LOREM';
+            }
+            else if (token == 'ipsum') {
+                return false;
+            }
+            return token;
+        }
+
+        var afterMask = function (token, range, maskChar, deliminator) {
+            if (token == 'fermentu##') {
+                return false;
+            }
+            else if (token && token.length > 0) {
+                return token[0];
+            }
+            return token;
+        }
+
         //Unit test for maskLeft function
         it('maskLeft()', function () {
             var specInput = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
@@ -94,12 +114,30 @@ describe('data-mask.js jasmine specs', function () {
             expect(dataMask.maskLeft(3)).toBe('***em ***um ***or *** ***t, ***sectetur ***piscing ***t. *** ***mentum ***t *** ***t ***rum ***mentum.');
             expect(dataMask.maskLeft(4, ' ', '#')).toBe('####m ####m ####r ### ####, ####ectetur ####iscing ####. ### ####entum #### ### #### ####um ####entum.');
             expect(dataMask.maskLeft(1, 5, '#')).toBe('#orem#ipsu# dol#r si# ame#, co#sect#tur #dipi#cing#elit# Sed#ferm#ntum#elit#sit #met #utru# fer#entu#.');
+            expect(dataMask.maskLeft(2)).toBe(dataMask.mask(2, ' ', '*', 1));
+            expect(dataMask.maskLeft(3)).toBe(dataMask.mask(3, ' ', '*', 1));
+            expect(dataMask.maskLeft(4, ' ', '#')).toBe(dataMask.mask(4, ' ', '#', 1));
+            expect(dataMask.maskLeft(1, 5, '#')).toBe(dataMask.mask(1, 5, '#', 1));
 
             //Static call.
             expect(DataMasker.maskLeft(specInput, 2)).toBe('**rem **sum **lor **t **et, **nsectetur **ipiscing **it. **d **rmentum **it **t **et **trum **rmentum.');
             expect(DataMasker.maskLeft(specInput, 3)).toBe('***em ***um ***or *** ***t, ***sectetur ***piscing ***t. *** ***mentum ***t *** ***t ***rum ***mentum.');
             expect(DataMasker.maskLeft(specInput, 4, ' ', '#')).toBe('####m ####m ####r ### ####, ####ectetur ####iscing ####. ### ####entum #### ### #### ####um ####entum.');
             expect(DataMasker.maskLeft(specInput, 1, 5, '#')).toBe('#orem#ipsu# dol#r si# ame#, co#sect#tur #dipi#cing#elit# Sed#ferm#ntum#elit#sit #met #utru# fer#entu#.');
+            expect(DataMasker.maskLeft(specInput, 2)).toBe(DataMasker.mask(specInput, 2, ' ', '*', 1));
+            expect(DataMasker.maskLeft(specInput, 3)).toBe(DataMasker.mask(specInput, 3, ' ', '*', 1));
+            expect(DataMasker.maskLeft(specInput, 4, ' ', '#')).toBe(DataMasker.mask(specInput, 4, ' ', '#', 1));
+            expect(DataMasker.maskLeft(specInput, 1, 5, '#')).toBe(DataMasker.mask(specInput, 1, 5, '#', 1));
+
+            //Before & after call.
+            expect(dataMask.maskLeft(2, ' ', '*', beforeMask)).toBe('**REM ipsum **lor **t **et, **nsectetur **ipiscing **it. **d **rmentum **it **t **et **trum **rmentum.');
+            expect(dataMask.maskLeft(2, ' ', '*', null, afterMask)).toBe('* * * * * * * * * * * * * * *');
+            expect(DataMasker.maskLeft(specInput, 2, ' ', '*', beforeMask)).toBe('**REM ipsum **lor **t **et, **nsectetur **ipiscing **it. **d **rmentum **it **t **et **trum **rmentum.');
+            expect(DataMasker.maskLeft(specInput, 2, ' ', '*', null, afterMask)).toBe('* * * * * * * * * * * * * * *');
+            expect(dataMask.maskLeft(2, ' ', '*', beforeMask)).toBe(dataMask.mask(2, ' ', '*', 1, beforeMask));
+            expect(dataMask.maskLeft(2, ' ', '*', null, afterMask)).toBe(dataMask.mask(2, ' ', '*', 1, null, afterMask));
+            expect(DataMasker.maskLeft(specInput, 2, ' ', '*', beforeMask)).toBe(DataMasker.mask(specInput, 2, ' ', '*', 1, beforeMask));
+            expect(DataMasker.maskLeft(specInput, 2, ' ', '*', null, afterMask)).toBe(DataMasker.mask(specInput, 2, ' ', '*', 1, null, afterMask));
         });
 
         //Unit test for maskRight function
@@ -111,11 +149,27 @@ describe('data-mask.js jasmine specs', function () {
             expect(dataMask.maskRight(1)).toBe('Lore* ipsu* dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
             expect(dataMask.maskRight(2, ' ', '#')).toBe('Lor## ips## dol## s## ame## consectet## adipisci## eli## S## ferment## el## s## am## rutr## fermentu##');
             expect(dataMask.maskRight(2, 8, '#')).toBe('Lorem ##sum do##r sit ##et, co##ectetu##adipis##ng eli## Sed f##mentum##lit si##amet r##rum fe##entu##');
+            expect(dataMask.maskRight(1)).toBe(dataMask.mask(1, ' ', '*', -1));
+            expect(dataMask.maskRight(2, ' ', '#')).toBe(dataMask.mask(2, ' ', '#', -1));
+            expect(dataMask.maskRight(2, 8, '#')).toBe(dataMask.mask(2, 8, '#', -1));
 
             //Static call.
             expect(DataMasker.maskRight(specInput, 1)).toBe('Lore* ipsu* dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
             expect(DataMasker.maskRight(specInput, 2, ' ', '#')).toBe('Lor## ips## dol## s## ame## consectet## adipisci## eli## S## ferment## el## s## am## rutr## fermentu##');
             expect(DataMasker.maskRight(specInput, 2, 8, '#')).toBe('Lorem ##sum do##r sit ##et, co##ectetu##adipis##ng eli## Sed f##mentum##lit si##amet r##rum fe##entu##');
+            expect(DataMasker.maskRight(specInput, 1)).toBe(DataMasker.mask(specInput, 1, ' ', '*', -1));
+            expect(DataMasker.maskRight(specInput, 2, ' ', '#')).toBe(DataMasker.mask(specInput, 2, ' ', '#', -1));
+            expect(DataMasker.maskRight(specInput, 2, 8, '#')).toBe(DataMasker.mask(specInput, 2, 8, '#', -1));
+
+            //Before & after call.
+            expect(dataMask.maskRight(1, ' ', '*', beforeMask)).toBe('LORE* ipsum dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
+            expect(dataMask.maskRight(2, ' ', '#', null, afterMask)).toBe('L i d s a c a e S f e s a r ');
+            expect(DataMasker.maskRight(specInput, 1, ' ', '*', beforeMask)).toBe('LORE* ipsum dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
+            expect(DataMasker.maskRight(specInput, 2, ' ', '#', null, afterMask)).toBe('L i d s a c a e S f e s a r ');
+            expect(dataMask.maskRight(1, ' ', '*', beforeMask)).toBe(dataMask.mask(1, ' ', '*', -1,  beforeMask));
+            expect(dataMask.maskRight(2, ' ', '#', null, afterMask)).toBe(dataMask.mask(2, ' ', '#', -1, null, afterMask));
+            expect(DataMasker.maskRight(specInput, 1, ' ', '*', beforeMask)).toBe(DataMasker.mask(specInput, 1, ' ', '*', -1, beforeMask));
+            expect(DataMasker.maskRight(specInput, 2, ' ', '#', null, afterMask)).toBe(DataMasker.mask(specInput, 2, ' ', '#', -1, null, afterMask));
         });
 
         //Unit test for maskRandom function
