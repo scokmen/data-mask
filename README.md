@@ -1,6 +1,9 @@
 # data-mask
 A small string masking library in javascript.
 
+[![npm version](https://badge.fury.io/js/data-mask.svg)](http://badge.fury.io/js/data-mask)
+[![Bower version](https://badge.fury.io/bo/data-mask.svg)](http://badge.fury.io/bo/data-mask)
+
 ## INSTALLATION
 
 **With bower:**
@@ -35,8 +38,10 @@ output = dataMasker.maskLeft(2, ' ', '#');   //"##rem ##sum"
 output = dataMasker.maskRight(2, ' ', '@');  //"lor@@ ips@@"
 output = dataMasker.maskRandom(2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
 output = dataMasker.maskLeft(2, 4, '?');     //"??re??ip??m"" (fixed chuks)
+
 //before & after mask functions.
 output = dataMasker.maskLeft(2, ' ', '?', beforeMaskFn, afterMaskFn);
+
 //or just call mask function
 output = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
 
@@ -72,6 +77,16 @@ function beforeMask(token, range, maskChar, deliminator) {
 }
 ```
 
+```javascript
+function afterMask(token, range, maskChar, deliminator) {
+    if(token === maskChar){
+        return false; //Ignore one-length masked tokens like '*', '#' etc.
+    }
+    else{
+        return token;
+    }
+}
+```
 ## LICENSE
 
 Copyright (c) 2016 Soner Çökmen
