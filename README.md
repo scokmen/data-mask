@@ -50,10 +50,13 @@ output = DataMasker.maskLeft('lorem ipsum', 2, ' ', '#');   //"##rem ##sum"
 output = DataMasker.maskRight('lorem ipsum', 2, ' ', '@');  //"lor@@ ips@@"
 output = DataMasker.maskRandom('lorem ipsum', 2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
 output = DataMasker.maskLeft('lorem ipsum', 2, 4, '?');     //"??re??ip??m"" (fixed chuks)
-
 ```
 
-Options       | Description
+## OPTIONS
+
+**Options for constructor or method params:**
+ 
+Option       | Description
 --- | ---
 `maskChar`    | An one-length string used for mask (Default `*`)
 `deliminator` | A deliminator string or integer for fixed chunks (Default `' '` or min `1`)
@@ -62,6 +65,7 @@ Options       | Description
 `beforeMask`  | Callback function on before mask for each token.  fn(`token`, `range`, `maskChar`, `deliminator`), a string token expected. Return `false` for prevent masking. 
 `aftermask`  | Callback function on after mask for each token.  fn(`token`, `range`, `maskChar`, `deliminator`), a string token expected. Return `false` for exclude token.
 
+**beforeMask and afterMask examples:**
 
 ```javascript
 function beforeMask(token, range, maskChar, deliminator) {
@@ -75,9 +79,7 @@ function beforeMask(token, range, maskChar, deliminator) {
         return token;
     }
 }
-```
 
-```javascript
 function afterMask(token, range, maskChar, deliminator) {
     if(token === maskChar){
         return false; //Ignore one-length masked tokens like '*', '#' etc.

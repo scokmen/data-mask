@@ -8,7 +8,7 @@
     }
 }(this, function () {
 
-    //Object defaults.
+    //Constant & defaults.
     var DEFAULT_MASK_CHAR = '*';
     var DEFAULT_DELIMINATOR = ' ';
     var RANDOM_MASK_RANGE = 0;
@@ -16,27 +16,53 @@
     var RANDOM_MASKING = 0;
     var FORWARD_MASKING = 1;
 
-    //Is parameter a valid string?
+    /**
+     * Is parameter a valid string object.
+     *
+     * @param  {string}  str
+     * @return {boolean}
+     */
     function isString(str) {
         return str !== null && typeof str === 'string';
     }
 
-    //Is parameter a valid function?
+    /**
+     * Is parameter a valid function?
+     *
+     * @param  {function} fn
+     * @return {boolean}
+     */
     function isFunction(fn) {
         return fn !== null && typeof fn === 'function';
     }
 
-    //Is parameter a valid number?
+    /**
+     * Is parameter a valid number?
+     *
+     * @param  {number}  num
+     * @return {boolean}
+     */
     function isNumber(num) {
-        return num !== null && !isNaN(num) && isFinite(num) && typeof num == 'number';
+        return num !== null && typeof num == 'number' && !isNaN(num) && isFinite(num);
     }
 
-    //Build char string with given character and length.
+    /**
+     * Build a string constructed with given character with length.
+     *
+     * @param  {string} char
+     * @param  {number} length
+     * @return {string}
+     */
     function buildCharString(char, length) {
         return Array(length + 1).join(char);
     }
 
-    //Build integer array from zero to given length.
+    /**
+     * Build an integer array from zero to given length.
+     *
+     * @param  {number} length
+     * @return {array}
+     */
     function buildIndexArray(length) {
         var array = new Array(length);
         for (var i = 0; i < length; i++) {
@@ -45,7 +71,12 @@
         return array;
     }
 
-    //Build scrambled integer array from zero to given length.
+    /**
+     * Build a scrambled integer array from zero to given length.
+     *
+     * @param  {number} length
+     * @return {array}
+     */
     function buildRandomIndexArray(length) {
         var array = buildIndexArray(length);
         var index = array.length, temp, rnd;
@@ -59,7 +90,13 @@
         return array;
     }
 
-    //Split the mask source by given deliminator.
+    /**
+     * Split given string with the given deliminator.
+     *
+     * @param  {string}        maskSource
+     * @param  {string-number} deliminator
+     * @return {string}
+     */
     function splitMaskSource(maskSource, deliminator) {
         if (isString(deliminator)) {
             return maskSource.split(deliminator);
@@ -67,7 +104,15 @@
         return maskSource.match(new RegExp('.{1,' + Math.floor(deliminator) + '}', 'g'));
     }
 
-    //Mask the given token by parameters.
+    /**
+     * Mask the token with maskChar, maskCount by token and direction.
+     *
+     * @param  {string} token
+     * @param  {string} maskChar
+     * @param  {number} maskCount
+     * @param  {number} direction
+     * @return {string}
+     */
     function maskToken(token, maskChar, maskCount, direction) {
         if (maskCount === 0) {
             return token;
@@ -96,7 +141,18 @@
         }
     }
 
-    //Invoke given method with params.
+    /**
+     * Create a DataMask object and call the mask function with given parameters.
+     *
+     * @param  {string}   maskSource
+     * @param  {number}   range
+     * @param  {string}   deliminator
+     * @param  {string}   maskChar
+     * @param  {number}   direction
+     * @param  {function} beforeMask
+     * @param  {function} afterMask
+     * @return {string}
+     */
     function invokeStaticMethod(maskSource, range, deliminator, maskChar, direction, beforeMask, afterMask) {
         var maskOptions = {
             range: range,
@@ -111,33 +167,64 @@
 
     var DataMasker = (function () {
 
+        /**
+         * DataMasker object.
+         *
+         * @constructor
+         * @param  {string} maskSource
+         * @param  {object} maskOptions
+         */
         function DataMasker(maskSource, maskOptions) {
             this.maskSource = isString(maskSource) ? maskSource : '';
             this.buildParams(maskOptions);
         }
 
-        //Is parameter a valid mask char?
+        /**
+         * Is parameter a valid mask char?
+         *
+         * @param  {string}  maskChar
+         * @return {boolean}
+         */
         DataMasker.prototype.isValidMaskChar = function (maskChar) {
             return isString(maskChar) && maskChar.length === 1;
         }
 
-        //Is parameter a valid deliminator?
+        /**
+         * Is parameter a valid deliminator?
+         *
+         * @param  {string}  deliminator
+         * @return {boolean}
+         */
         DataMasker.prototype.isValidDeliminator = function (deliminator) {
             return (isString(deliminator) && deliminator.length > 0) ||
                    (isNumber(deliminator) && deliminator > 0);
         }
 
-        //Is parameter a valid mask range?
+        /**
+         * Is parameter a valid mask range?
+         *
+         * @param  {number}  range
+         * @return {boolean}
+         */
         DataMasker.prototype.isValidRange = function (range) {
-            return range !== null && range !== '' && !isNaN(range) && isFinite(range) && range >= 0;
+            return range !== null && range !== '' && range >= 0 && !isNaN(range) && isFinite(range);
         }
 
-        //Is parameter a valid mas direction?
+        /**
+         * Is parameter a valid mask direction?
+         *
+         * @param  {number}  direction
+         * @return {boolean}
+         */
         DataMasker.prototype.isValidMaskDirection = function (direction) {
             return [BACKWARD_MASKING, RANDOM_MASKING, FORWARD_MASKING].indexOf(direction) > -1;
         }
 
-        //Build object parameters.
+        /**
+         * Validate datamasker parameters.
+         *
+         * @param  {object}  params
+         */
         DataMasker.prototype.buildParams = function (params) {
             this.maskOptions = params || {};
             this.maskOptions.maskChar = this.isValidMaskChar(this.maskOptions.maskChar) || DEFAULT_MASK_CHAR;
@@ -148,6 +235,17 @@
             this.maskOptions.afterMask = isFunction(this.maskOptions.afterMask) || null;
         }
 
+        /**
+         * Mask the object's mask source by tokens.
+         *
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {number}   direction
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.prototype.mask = function (range, deliminator, maskChar, direction, beforeMask, afterMask) {
             var opMaskChar = this.isValidMaskChar(maskChar) ? maskChar : this.maskOptions.maskChar;
             var opDeliminator = this.isValidDeliminator(deliminator) ? deliminator : this.maskOptions.deliminator;
@@ -161,6 +259,8 @@
             var tokens = splitMaskSource(this.maskSource, opDeliminator);
             var maskedTokens = new Array(tokens.length);
             var token = null;
+            var joinCharacter = isString(opDeliminator) ? opDeliminator : '';
+
             for (var i = 0; i < tokens.length; i++) {
                 var tokenRange = 0;
                 if (tokens[i].length === 0) {
@@ -195,33 +295,111 @@
                 maskedTokens[i] = token;
             }
 
-            return maskedTokens.join(isString(opDeliminator) ? opDeliminator : '');
+            return maskedTokens.join(joinCharacter);
         }
 
+        /**
+         * Mask the given mask source.
+         *
+         * @param  {string}   maskSource
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {number}   direction
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.mask = function (maskSource, range, deliminator, maskChar, direction, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, direction, beforeMask, afterMask);
         }
 
+        /**
+         * Mask the object's mask source with left-mask.
+         *
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.prototype.maskLeft = function (range, deliminator, maskChar, beforeMask, afterMask) {
             return this.mask(range, deliminator, maskChar, FORWARD_MASKING, beforeMask, afterMask);
         }
 
+        /**
+         * Mask the given mask source with left-mask.
+         *
+         * @param  {string}   maskSource
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {number}   direction
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.maskLeft = function (maskSource, range, deliminator, maskChar, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, FORWARD_MASKING, beforeMask, afterMask);
         }
 
+        /**
+         * Mask the given mask source with right-mask.
+         *
+         * @param  {string}   maskSource
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {number}   direction
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.prototype.maskRight = function (range, deliminator, maskChar, beforeMask, afterMask) {
             return this.mask(range, deliminator, maskChar, BACKWARD_MASKING, beforeMask, afterMask);
         }
 
+        /**
+         * Mask the object's mask source with right-mask.
+         *
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.maskRight = function (maskSource, range, deliminator, maskChar, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, BACKWARD_MASKING, beforeMask, afterMask);
         }
 
+        /**
+         * Mask the given mask source with random-mask.
+         *
+         * @param  {string}   maskSource
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {number}   direction
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.prototype.maskRandom = function (range, deliminator, maskChar, beforeMask, afterMask) {
             return this.mask(range, deliminator, maskChar, RANDOM_MASKING, beforeMask, afterMask);
         }
 
+        /**
+         * Mask the object's mask source with random-mask.
+         *
+         * @param  {number}   range
+         * @param  {string}   deliminator
+         * @param  {string}   maskChar
+         * @param  {function} beforeMask
+         * @param  {function} afterMask
+         * @return {string}
+         */
         DataMasker.maskRandom = function (maskSource, range, deliminator, maskChar, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, RANDOM_MASKING, beforeMask, afterMask);
         }
