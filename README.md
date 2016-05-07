@@ -3,6 +3,7 @@ A small string masking library in javascript.
 
 [![npm version](https://badge.fury.io/js/data-mask.svg)](http://badge.fury.io/js/data-mask)
 [![Bower version](https://badge.fury.io/bo/data-mask.svg)](http://badge.fury.io/bo/data-mask)
+[![Build Status](https://travis-ci.org/scokmen/data-mask.svg?branch=master)](https://travis-ci.org/scokmen/data-mask)
 
 ## INSTALLATION
 
