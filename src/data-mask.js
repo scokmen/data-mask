@@ -187,7 +187,7 @@
          */
         DataMasker.prototype.isValidMaskChar = function (maskChar) {
             return isString(maskChar) && maskChar.length === 1;
-        }
+        };
 
         /**
          * Is parameter a valid deliminator?
@@ -198,7 +198,7 @@
         DataMasker.prototype.isValidDeliminator = function (deliminator) {
             return (isString(deliminator) && deliminator.length > 0) ||
                    (isNumber(deliminator) && deliminator > 0);
-        }
+        };
 
         /**
          * Is parameter a valid mask range?
@@ -208,7 +208,7 @@
          */
         DataMasker.prototype.isValidRange = function (range) {
             return range !== null && range !== '' && range >= 0 && !isNaN(range) && isFinite(range);
-        }
+        };
 
         /**
          * Is parameter a valid mask direction?
@@ -218,7 +218,7 @@
          */
         DataMasker.prototype.isValidMaskDirection = function (direction) {
             return [BACKWARD_MASKING, RANDOM_MASKING, FORWARD_MASKING].indexOf(direction) > -1;
-        }
+        };
 
         /**
          * Validate datamasker parameters.
@@ -233,7 +233,7 @@
             this.maskOptions.direction = this.isValidMaskDirection(this.maskOptions.direction) || FORWARD_MASKING;
             this.maskOptions.beforeMask = isFunction(this.maskOptions.beforeMask) || null;
             this.maskOptions.afterMask = isFunction(this.maskOptions.afterMask) || null;
-        }
+        };
 
         /**
          * Mask the object's mask source by tokens.
@@ -296,7 +296,7 @@
             }
 
             return maskedTokens.join(joinCharacter);
-        }
+        };
 
         /**
          * Mask the given mask source.
@@ -312,7 +312,7 @@
          */
         DataMasker.mask = function (maskSource, range, deliminator, maskChar, direction, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, direction, beforeMask, afterMask);
-        }
+        };
 
         /**
          * Mask the object's mask source with left-mask.
@@ -326,7 +326,7 @@
          */
         DataMasker.prototype.maskLeft = function (range, deliminator, maskChar, beforeMask, afterMask) {
             return this.mask(range, deliminator, maskChar, FORWARD_MASKING, beforeMask, afterMask);
-        }
+        };
 
         /**
          * Mask the given mask source with left-mask.
@@ -342,7 +342,7 @@
          */
         DataMasker.maskLeft = function (maskSource, range, deliminator, maskChar, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, FORWARD_MASKING, beforeMask, afterMask);
-        }
+        };
 
         /**
          * Mask the given mask source with right-mask.
@@ -358,7 +358,7 @@
          */
         DataMasker.prototype.maskRight = function (range, deliminator, maskChar, beforeMask, afterMask) {
             return this.mask(range, deliminator, maskChar, BACKWARD_MASKING, beforeMask, afterMask);
-        }
+        };
 
         /**
          * Mask the object's mask source with right-mask.
@@ -372,7 +372,7 @@
          */
         DataMasker.maskRight = function (maskSource, range, deliminator, maskChar, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, BACKWARD_MASKING, beforeMask, afterMask);
-        }
+        };
 
         /**
          * Mask the given mask source with random-mask.
@@ -388,7 +388,7 @@
          */
         DataMasker.prototype.maskRandom = function (range, deliminator, maskChar, beforeMask, afterMask) {
             return this.mask(range, deliminator, maskChar, RANDOM_MASKING, beforeMask, afterMask);
-        }
+        };
 
         /**
          * Mask the object's mask source with random-mask.
@@ -402,7 +402,7 @@
          */
         DataMasker.maskRandom = function (maskSource, range, deliminator, maskChar, beforeMask, afterMask) {
             return invokeStaticMethod(maskSource, range, deliminator, maskChar, RANDOM_MASKING, beforeMask, afterMask);
-        }
+        };
 
         return DataMasker;
     }());
