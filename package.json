@@ -1,6 +1,6 @@
 {
   "name": "data-mask",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A small string masking library in javascript.",
   "main": "src/data-mask.js",
   "repository": {
