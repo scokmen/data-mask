@@ -227,12 +227,12 @@
          */
         DataMasker.prototype.buildParams = function (params) {
             this.maskOptions = params || {};
-            this.maskOptions.maskChar = this.isValidMaskChar(this.maskOptions.maskChar) || DEFAULT_MASK_CHAR;
-            this.maskOptions.deliminator = this.isValidDeliminator(this.maskOptions.deliminator) || DEFAULT_DELIMINATOR;
-            this.maskOptions.range = this.isValidRange(this.maskOptions.range) || RANDOM_MASK_RANGE;
-            this.maskOptions.direction = this.isValidMaskDirection(this.maskOptions.direction) || FORWARD_MASKING;
-            this.maskOptions.beforeMask = isFunction(this.maskOptions.beforeMask) || null;
-            this.maskOptions.afterMask = isFunction(this.maskOptions.afterMask) || null;
+            this.maskOptions.maskChar = this.isValidMaskChar(this.maskOptions.maskChar) ? this.maskOptions.maskChar : DEFAULT_MASK_CHAR;
+            this.maskOptions.deliminator = this.isValidDeliminator(this.maskOptions.deliminator) ? this.maskOptions.deliminator : DEFAULT_DELIMINATOR;
+            this.maskOptions.range = this.isValidRange(this.maskOptions.range) ? this.maskOptions.range : RANDOM_MASK_RANGE;
+            this.maskOptions.direction = this.isValidMaskDirection(this.maskOptions.direction) ? this.maskOptions.direction : FORWARD_MASKING;
+            this.maskOptions.beforeMask = isFunction(this.maskOptions.beforeMask) ? this.maskOptions.beforeMask : null;
+            this.maskOptions.afterMask = isFunction(this.maskOptions.afterMask) ? this.maskOptions.afterMask : null;
         };
 
         /**

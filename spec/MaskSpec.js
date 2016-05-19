@@ -104,6 +104,23 @@ describe('data-mask.js jasmine specs', function () {
             return token;
         }
 
+        //Unit test for constructor options.
+        it('Constructor options', function () {
+            var options = {
+                range: 2,
+                deliminator: ' ',
+                maskChar: '$',
+                direction: 1,
+                beforeMask: null,
+                afterMask: null
+            };
+            var specInput = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
+            var dataMask = new DataMasker(specInput, options);
+
+            //Instance call.
+            expect(dataMask.mask()).toBe('$$rem $$sum $$lor $$t $$et, $$nsectetur $$ipiscing $$it. $$d $$rmentum $$it $$t $$et $$trum $$rmentum.');
+        });
+
         //Unit test for maskLeft function
         it('maskLeft()', function () {
             var specInput = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum elit sit amet rutrum fermentum.';
@@ -166,7 +183,7 @@ describe('data-mask.js jasmine specs', function () {
             expect(dataMask.maskRight(2, ' ', '#', null, afterMask)).toBe('L i d s a c a e S f e s a r ');
             expect(DataMasker.maskRight(specInput, 1, ' ', '*', beforeMask)).toBe('LORE* ipsum dolo* si* amet* consectetu* adipiscin* elit* Se* fermentu* eli* si* ame* rutru* fermentum*');
             expect(DataMasker.maskRight(specInput, 2, ' ', '#', null, afterMask)).toBe('L i d s a c a e S f e s a r ');
-            expect(dataMask.maskRight(1, ' ', '*', beforeMask)).toBe(dataMask.mask(1, ' ', '*', -1,  beforeMask));
+            expect(dataMask.maskRight(1, ' ', '*', beforeMask)).toBe(dataMask.mask(1, ' ', '*', -1, beforeMask));
             expect(dataMask.maskRight(2, ' ', '#', null, afterMask)).toBe(dataMask.mask(2, ' ', '#', -1, null, afterMask));
             expect(DataMasker.maskRight(specInput, 1, ' ', '*', beforeMask)).toBe(DataMasker.mask(specInput, 1, ' ', '*', -1, beforeMask));
             expect(DataMasker.maskRight(specInput, 2, ' ', '#', null, afterMask)).toBe(DataMasker.mask(specInput, 2, ' ', '#', -1, null, afterMask));
