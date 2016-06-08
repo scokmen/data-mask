@@ -38,7 +38,7 @@ output = dataMasker.maskRandom(2); //"lo*e* ip**m" etc (random chars)
 output = dataMasker.maskLeft(2, ' ', '#');   //"##rem ##sum"
 output = dataMasker.maskRight(2, ' ', '@');  //"lor@@ ips@@"
 output = dataMasker.maskRandom(2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
-output = dataMasker.maskLeft(2, 4, '?');     //"??re??ip??m"" (fixed chuks)
+output = dataMasker.maskLeft(2, 4, '?');     //"??re??ip??m"" (fixed chunks)
 
 //before & after mask functions.
 output = dataMasker.maskLeft(2, ' ', '?', beforeMaskFn, afterMaskFn);
@@ -50,7 +50,7 @@ output = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
 output = DataMasker.maskLeft('lorem ipsum', 2, ' ', '#');   //"##rem ##sum"
 output = DataMasker.maskRight('lorem ipsum', 2, ' ', '@');  //"lor@@ ips@@"
 output = DataMasker.maskRandom('lorem ipsum', 2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
-output = DataMasker.maskLeft('lorem ipsum', 2, 4, '?');     //"??re??ip??m"" (fixed chuks)
+output = DataMasker.maskLeft('lorem ipsum', 2, 4, '?');     //"??re??ip??m"" (fixed chunks)
 ```
 
 ## OPTIONS

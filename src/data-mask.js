@@ -17,7 +17,7 @@
     var FORWARD_MASKING = 1;
 
     /**
-     * Is parameter a valid string object.
+     * Is parameter a valid string object?
      *
      * @param  {string}  str
      * @return {boolean}
