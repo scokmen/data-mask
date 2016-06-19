@@ -59,17 +59,17 @@ output = DataMasker.maskLeft('lorem ipsum', 2, 4, '?');     //"??re??ip??m"" (fi
  
 Option       | Description
 --- | ---
-`maskChar`    | An one-length string used for mask (Default `*`)
-`deliminator` | A deliminator string or integer for fixed chunks (Default `' '` or min `1`)
-`direction  ` | Mask positions. Left, right or random chars "1, -1, 0" (Default `1`)
-`range`       | Mask character count or percentage for token (0 < range < 1), range=0 is random character count.
-`beforeMask`  | Callback function on before mask for each token.  fn(`token`, `range`, `maskChar`, `deliminator`), a string token expected. Return `false` for prevent masking. 
-`aftermask`  | Callback function on after mask for each token.  fn(`token`, `range`, `maskChar`, `deliminator`), a string token expected. Return `false` for exclude token.
+`char`    | An one-length string used for mask. **Default** (`*`)
+`deliminator` | A deliminator string or a number for fixed length tokens. **Default** (`space`)
+`direction  ` | Mask positions. Left, right or mixed positions `1`, `-1`, `0` **Default** (`1`)
+`count`       | Masked character count or percentage for per token (0 < count < 1), count=0 is random character count. **Default**(`0`)
+`beforeMask`  | Callback function on before mask for each token.  fn(`token`, `count`, `char`, `deliminator`, `index`), a string token expected. Return `false` for prevent masking. 
+`aftermask`  | Callback function on after mask for each token.  fn(`token`, `count`, `char`, `deliminator`, `index`), a string token expected. Return `false` for exclude token.
 
 **beforeMask and afterMask examples:**
 
 ```javascript
-function beforeMask(token, range, maskChar, deliminator) {
+function beforeMask(token, count, char, deliminator, index) {
     if(token=='lorem'){
         return 'LOREM'; //Uppercase 'lorem'
     }
@@ -81,9 +81,9 @@ function beforeMask(token, range, maskChar, deliminator) {
     }
 }
 
-function afterMask(token, range, maskChar, deliminator) {
-    if(token === maskChar){
-        return false; //Ignore one-length masked tokens like '*', '#' etc.
+function afterMask(token, count, char, deliminator, index) {
+    if(token === char){
+        return false; //Ignore if token equals to char
     }
     else{
         return token;

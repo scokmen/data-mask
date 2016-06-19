@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var jasmine = require('gulp-jasmine');
+var jshint = require('gulp-jshint');
 
 var testFile = './spec/maskspec.js';
 var sourceFilePath = './src/data-mask.js';
@@ -19,4 +20,11 @@ gulp.task('compress', function () {
 gulp.task('jasmine', function () {
     gulp.src(testFile)
 		.pipe(jasmine());
+});
+
+//Run  JsHint.
+gulp.task('jshint', function () {
+    gulp.src(sourceFilePath)
+        .pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter('jshint-stylish'))
 });

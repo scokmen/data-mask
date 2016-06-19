@@ -3,23 +3,23 @@ describe('data-mask.js jasmine specs', function () {
 
     describe('#parameter check functions', function () {
 
-        //Unit test for isValidMaskChar function.
-        it('isValidMaskChar()', function () {
+        //Unit test for isValidchar function.
+        it('isValidChar()', function () {
             var dataMask = new DataMasker();
 
             //Expect false.
-            expect(dataMask.isValidMaskChar(false)).toBe(false);
-            expect(dataMask.isValidMaskChar(12)).toBe(false);
-            expect(dataMask.isValidMaskChar(null)).toBe(false);
-            expect(dataMask.isValidMaskChar(undefined)).toBe(false);
-            expect(dataMask.isValidMaskChar({})).toBe(false);
-            expect(dataMask.isValidMaskChar([])).toBe(false);
-            expect(dataMask.isValidMaskChar(Infinity)).toBe(false);
-            expect(dataMask.isValidMaskChar('')).toBe(false);
-            expect(dataMask.isValidMaskChar('xy')).toBe(false);
+            expect(dataMask.isValidChar(false)).toBe(false);
+            expect(dataMask.isValidChar(12)).toBe(false);
+            expect(dataMask.isValidChar(null)).toBe(false);
+            expect(dataMask.isValidChar(undefined)).toBe(false);
+            expect(dataMask.isValidChar({})).toBe(false);
+            expect(dataMask.isValidChar([])).toBe(false);
+            expect(dataMask.isValidChar(Infinity)).toBe(false);
+            expect(dataMask.isValidChar('')).toBe(false);
+            expect(dataMask.isValidChar('xy')).toBe(false);
 
             //Expect true.
-            expect(dataMask.isValidMaskChar('*')).toBe(true);
+            expect(dataMask.isValidChar('*')).toBe(true);
         });
 
         //Unit test for isValidDeliminator function.
@@ -41,50 +41,50 @@ describe('data-mask.js jasmine specs', function () {
             expect(dataMask.isValidDeliminator(12)).toBe(true);
         });
 
-        //Unit test for isValidRange function.
-        it('isValidRange()', function () {
+        //Unit test for isValidcount function.
+        it('isValidCount()', function () {
             var dataMask = new DataMasker();
 
             //Expect false.
-            expect(dataMask.isValidRange(null)).toBe(false);
-            expect(dataMask.isValidRange(undefined)).toBe(false);
-            expect(dataMask.isValidRange({})).toBe(false);
-            expect(dataMask.isValidRange('')).toBe(false);
-            expect(dataMask.isValidRange('*')).toBe(false);
-            expect(dataMask.isValidRange(Infinity)).toBe(false);
-            expect(dataMask.isValidRange(-0.02)).toBe(false);
+            expect(dataMask.isValidCount(null)).toBe(false);
+            expect(dataMask.isValidCount(undefined)).toBe(false);
+            expect(dataMask.isValidCount({})).toBe(false);
+            expect(dataMask.isValidCount('')).toBe(false);
+            expect(dataMask.isValidCount('*')).toBe(false);
+            expect(dataMask.isValidCount(Infinity)).toBe(false);
+            expect(dataMask.isValidCount(-0.02)).toBe(false);
 
             //Expect true.
-            expect(dataMask.isValidRange(0)).toBe(true);
-            expect(dataMask.isValidRange(22)).toBe(true);
-            expect(dataMask.isValidRange(0.02)).toBe(true);
+            expect(dataMask.isValidCount(0)).toBe(true);
+            expect(dataMask.isValidCount(22)).toBe(true);
+            expect(dataMask.isValidCount(0.02)).toBe(true);
         });
 
         //Unit test for isValidMaskDirection function.
-        it('isValidMaskDirection()', function () {
+        it('isValidDirection()', function () {
             var dataMask = new DataMasker();
 
             //Expect false.
-            expect(dataMask.isValidMaskDirection(null)).toBe(false);
-            expect(dataMask.isValidMaskDirection(undefined)).toBe(false);
-            expect(dataMask.isValidMaskDirection({})).toBe(false);
-            expect(dataMask.isValidMaskDirection('')).toBe(false);
-            expect(dataMask.isValidMaskDirection('*')).toBe(false);
-            expect(dataMask.isValidMaskDirection(Infinity)).toBe(false);
-            expect(dataMask.isValidMaskDirection([])).toBe(false);
-            expect(dataMask.isValidMaskDirection(-2)).toBe(false);
-            expect(dataMask.isValidMaskDirection(0.5)).toBe(false);
+            expect(dataMask.isValidDirection(null)).toBe(false);
+            expect(dataMask.isValidDirection(undefined)).toBe(false);
+            expect(dataMask.isValidDirection({})).toBe(false);
+            expect(dataMask.isValidDirection('')).toBe(false);
+            expect(dataMask.isValidDirection('*')).toBe(false);
+            expect(dataMask.isValidDirection(Infinity)).toBe(false);
+            expect(dataMask.isValidDirection([])).toBe(false);
+            expect(dataMask.isValidDirection(-2)).toBe(false);
+            expect(dataMask.isValidDirection(0.5)).toBe(false);
 
             //Expect true.
-            expect(dataMask.isValidMaskDirection(-1)).toBe(true);
-            expect(dataMask.isValidMaskDirection(0)).toBe(true);
-            expect(dataMask.isValidMaskDirection(1)).toBe(true);
+            expect(dataMask.isValidDirection(-1)).toBe(true);
+            expect(dataMask.isValidDirection(0)).toBe(true);
+            expect(dataMask.isValidDirection(1)).toBe(true);
         });
     });
 
     describe('mask functions', function () {
 
-        var beforeMask = function (token, range, maskChar, deliminator) {
+        var beforeMask = function (token, count, char, deliminator) {
             if (token == 'Lorem') {
                 return 'LOREM';
             }
@@ -94,7 +94,7 @@ describe('data-mask.js jasmine specs', function () {
             return token;
         }
 
-        var afterMask = function (token, range, maskChar, deliminator) {
+        var afterMask = function (token, count, char, deliminator) {
             if (token == 'fermentu##') {
                 return false;
             }
@@ -107,9 +107,9 @@ describe('data-mask.js jasmine specs', function () {
         //Unit test for constructor options.
         it('Constructor options', function () {
             var options = {
-                range: 2,
+                count: 2,
                 deliminator: ' ',
-                maskChar: '$',
+                char: '$',
                 direction: 1,
                 beforeMask: null,
                 afterMask: null
@@ -198,11 +198,11 @@ describe('data-mask.js jasmine specs', function () {
             for (var i = 1; i < 4; i++) {
                 var output1 = dataMask.maskRandom(i);
                 var output2 = DataMasker.maskRandom(specInput, i);
-                var maskCharCount1 = (output1.match(new RegExp('\\*', 'g')) || []).length;
-                var maskCharCount2 = (output2.match(new RegExp('\\*', 'g')) || []).length;
+                var charCount1 = (output1.match(new RegExp('\\*', 'g')) || []).length;
+                var charCount2 = (output2.match(new RegExp('\\*', 'g')) || []).length;
 
-                expect(maskCharCount1).toBe(tokenCount * i);
-                expect(maskCharCount2).toBe(tokenCount * i);
+                expect(charCount1).toBe(tokenCount * i);
+                expect(charCount2).toBe(tokenCount * i);
             }
         });
     });

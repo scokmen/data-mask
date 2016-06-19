@@ -1,15 +1,15 @@
 ﻿declare interface MaskFunction {
 
-    (token?: string, range?: number, maskChar?: string, deliminator?: string | number): boolean;
+    (token?: string, count?: number, char?: string, deliminator?: string | number, index?: number): boolean | string;
 }
 
 declare interface DataMaskOptions {
 
-    range?: number;
+    count?: number;
 
     deliminator?: string | number;
 
-    maskChar?: string;
+    char?: string;
 
     direction?: number;
 
@@ -20,24 +20,24 @@ declare interface DataMaskOptions {
 
 declare interface DataMasker {
 
-    mask: (range?: number, deliminator?: string | number, maskChar?: string, direction?: number, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    mask: (count?: number, deliminator?: string | number, char?: string, direction?: number, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 
-    maskLeft: (range?: number, deliminator?: string | number, maskChar?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    maskLeft: (count?: number, deliminator?: string | number, char?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 
-    maskRight: (range?: number, deliminator?: string | number, maskChar?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    maskRight: (count?: number, deliminator?: string | number, char?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 
-    maskRandom: (range?: number, deliminator?: string | number, maskChar?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    maskRandom: (count?: number, deliminator?: string | number, char?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 }
 
 declare var DataMasker: {
 
-    new (maskSource: string, dataMaskOptions?: DataMaskOptions): DataMasker;
+    new (source: string, options?: DataMaskOptions): DataMasker;
 
-    mask: (maskSource: string, range?: number, deliminator?: string | number, maskChar?: string, direction?: number, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    mask: (source: string, count?: number, deliminator?: string | number, char?: string, direction?: number, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 
-    maskLeft: (maskSource: string, range?: number, deliminator?: string | number, maskChar?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    maskLeft: (source: string, count?: number, deliminator?: string | number, char?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 
-    maskRight: (maskSource: string, range?: number, deliminator?: string | number, maskChar?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    maskRight: (source: string, count?: number, deliminator?: string | number, char?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 
-    maskRandom: (maskSource: string, range?: number, deliminator?: string | number, maskChar?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
+    maskRandom: (source: string, count?: number, deliminator?: string | number, char?: string, beforeMask?: MaskFunction, afterMask?: MaskFunction) => string;
 }
