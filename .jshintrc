@@ -3,8 +3,8 @@
     "browser": true,
     "esnext": true,
     "bitwise": false,
-    "camelcase": false,
-    "curly": false,
+    "camelcase": true,
+    "curly": true,
     "eqeqeq": true,
     "immed": true,
     "latedef": true,
@@ -14,13 +14,10 @@
     "regexp": true,
     "undef": true,
     "unused": true,
-    "strict": false,
+    "strict": true,
     "trailing": true,
     "smarttabs": false,
     "expr": true,
-    "globals": {
-        "angular": true
-    },
     "predef": [
         "define",
         "require",

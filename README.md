@@ -30,11 +30,12 @@ npm install --save data-mask
 var dataMasker = new DataMasker('lorem ipsum', options); //options is optional
 var output = '';
 
+//options can be override on function call.
 output = dataMasker.maskLeft(2);   //"**rem **sum"
 output = dataMasker.maskRight(2);  //"lor** ips**"
 output = dataMasker.maskRandom(2); //"lo*e* ip**m" etc (random chars)
 
-//options can be override on function call
+//options can be override on function call.
 output = dataMasker.maskLeft(2, ' ', '#');   //"##rem ##sum"
 output = dataMasker.maskRight(2, ' ', '@');  //"lor@@ ips@@"
 output = dataMasker.maskRandom(2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
@@ -43,10 +44,10 @@ output = dataMasker.maskLeft(2, 4, '?');     //"??re??ip??m"" (fixed chunks)
 //before & after mask functions.
 output = dataMasker.maskLeft(2, ' ', '?', beforeMaskFn, afterMaskFn);
 
-//or just call mask function
+//or just call mask function.
 output = dataMasker.mask(2, ' ', '#', 1);   //"##rem ##sum"
 
-//also static calls available.
+//also static methods are available.
 output = DataMasker.maskLeft('lorem ipsum', 2, ' ', '#');   //"##rem ##sum"
 output = DataMasker.maskRight('lorem ipsum', 2, ' ', '@');  //"lor@@ ips@@"
 output = DataMasker.maskRandom('lorem ipsum', 2, ' ', '-'); //"lo-e- ip--m" etc (random chars)
@@ -65,6 +66,8 @@ Option       | Description
 `count`       | Masked character count or percentage for per token (0 < count < 1), count=0 is random character count. **Default**(`0`)
 `beforeMask`  | Callback function on before mask for each token.  fn(`token`, `count`, `char`, `deliminator`, `index`), a string token expected. Return `false` for prevent masking. 
 `aftermask`  | Callback function on after mask for each token.  fn(`token`, `count`, `char`, `deliminator`, `index`), a string token expected. Return `false` for exclude token.
+
+## CALLBACKS
 
 **beforeMask and afterMask examples:**
 
