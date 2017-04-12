@@ -1,25 +1,29 @@
 # data-mask
 A small string masking library in javascript.
 
+[![GitHub version](https://badge.fury.io/gh/scokmen%2Fdata-mask.svg)](https://badge.fury.io/gh/scokmen%2Fdata-mask)
 [![npm version](https://badge.fury.io/js/data-mask.svg)](http://badge.fury.io/js/data-mask)
 [![Bower version](https://badge.fury.io/bo/data-mask.svg)](http://badge.fury.io/bo/data-mask)
 [![Build Status](https://travis-ci.org/scokmen/data-mask.svg?branch=master)](https://travis-ci.org/scokmen/data-mask)
 
-## INSTALLATION
 
-**With bower:**
+[![NPM](https://nodei.co/npm/data-mask.png)](https://nodei.co/npm/data-mask/)
 
-```javascript
-bower install --save data-mask
-```
+# Installation
 
-**With npm:**
+**Bower:**
 
 ```javascript
-npm install --save data-mask
+$ bower install data-mask
 ```
 
-## USAGE
+**Npm:**
+
+```javascript
+$ npm install data-mask
+```
+
+# Documentation
 
  **Use it by using DataMasker instance with plain text:**
 
@@ -54,7 +58,7 @@ output = DataMasker.maskRandom('lorem ipsum', 2, ' ', '-'); //"lo-e- ip--m" etc 
 output = DataMasker.maskLeft('lorem ipsum', 2, 4, '?');     //"??re??ip??m"" (fixed chunks)
 ```
 
-## OPTIONS
+# Options
 
 **Options for constructor or method params:**
  
@@ -67,7 +71,7 @@ Option       | Description
 `beforeMask`  | Callback function on before mask for each token.  fn(`token`, `count`, `char`, `deliminator`, `index`), a string token expected. Return `false` for prevent masking. 
 `aftermask`  | Callback function on after mask for each token.  fn(`token`, `count`, `char`, `deliminator`, `index`), a string token expected. Return `false` for exclude token.
 
-## CALLBACKS
+# Callbacks
 
 **beforeMask and afterMask examples:**
 
@@ -93,8 +97,6 @@ function afterMask(token, count, char, deliminator, index) {
     }
 }
 ```
-## LICENSE
+# License
 
-Copyright (c) 2016 Soner Çökmen
-
-Licensed under the MIT license.
+Copyright (c) 2016 Soner Çökmen, Licensed under the MIT license.
