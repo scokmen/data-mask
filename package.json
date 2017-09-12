@@ -2,36 +2,38 @@
   "name": "data-mask",
   "version": "0.0.4",
   "description": "A small string masking library in javascript.",
-  "main": "src/data-mask.js",
+  "main": "dist/data-mask.min.js",
+  "license": "MIT",
+  "homepage": "https://github.com/scokmen/data-mask#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/scokmen/data-mask.git"
   },
-  "scripts": {
-    "prod": "gulp compress",
-    "test": "gulp jasmine",
-    "jshint": "gulp jshint"
-  },
+  "authors": [
+    "Soner Çökmen <sonercokmen@gmail.com>"
+  ],
   "keywords": [
     "data",
     "string",
-    "mask"
+    "masking"
   ],
-  "author": {
-    "name": "Soner Çökmen",
-    "email": "sonercokmen@gmail.com"
-  },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/scokmen/data-mask/issues"
   },
-  "homepage": "https://github.com/scokmen/data-mask#readme",
+  "scripts": {
+    "js:hint": "gulp js:hint",
+    "js:test": "gulp js:test",
+    "js:build": "gulp js:build",
+    "js:coverage": "istanbul cover ./node_modules/jasmine/bin/jasmine.js"
+  },
   "devDependencies": {
+    "codecov": "^2.3.0",
     "gulp": "^3.9.1",
     "gulp-jasmine": "^2.3.0",
     "gulp-jshint": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.5.3",
+    "istanbul": "^0.4.5",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0"
   }

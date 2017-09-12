@@ -1,8 +1,19 @@
 language: node_js
+sudo: false
 node_js:
-  - "4.4.3"
+  - "4.1"
+  - "4.0"
+  - "0.12"
   - "0.11"
   - "0.10"
-before_script:
-  - npm install -g gulp
-script: gulp jasmine
+  - "iojs"
+install:
+  - npm install
+  - npm install -g istanbul
+  - npm install -g codecov
+script:
+  - npm run js:hint
+  - npm run js:test
+  - istanbul cover ./node_modules/jasmine/bin/jasmine.js
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

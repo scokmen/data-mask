@@ -1,7 +1,7 @@
 describe('data-mask.js jasmine specs', function () {
     var DataMasker = require('../src/data-mask.js');
 
-    describe('#parameter check functions', function () {
+    describe('parameter validator functions', function () {
 
         //Unit test for isValidchar function.
         it('isValidChar()', function () {
@@ -85,24 +85,24 @@ describe('data-mask.js jasmine specs', function () {
     describe('mask functions', function () {
 
         var beforeMask = function (token, count, char, deliminator) {
-            if (token == 'Lorem') {
+            if (token === 'Lorem') {
                 return 'LOREM';
             }
-            else if (token == 'ipsum') {
+            else if (token === 'ipsum') {
                 return false;
             }
             return token;
-        }
+        };
 
         var afterMask = function (token, count, char, deliminator) {
-            if (token == 'fermentu##') {
+            if (token === 'fermentu##') {
                 return false;
             }
             else if (token && token.length > 0) {
                 return token[0];
             }
             return token;
-        }
+        };
 
         //Unit test for constructor options.
         it('Constructor options', function () {

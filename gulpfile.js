@@ -4,26 +4,35 @@ var rename = require('gulp-rename');
 var jasmine = require('gulp-jasmine');
 var jshint = require('gulp-jshint');
 
-var testFile = './spec/maskspec.js';
+var testFile = './spec/data-mask.spec.js';
 var sourceFilePath = './src/data-mask.js';
-var destinationFileName = 'data-mask.min.js'
+var destinationFileName = 'data-mask.min.js';
 
-//Compress source file.
-gulp.task('compress', function () {
+/**
+ * @name js:build
+ * @description Build js file.
+ */
+gulp.task('js:build', function () {
     return gulp.src(sourceFilePath)
       .pipe(uglify())
       .pipe(rename(destinationFileName))
       .pipe(gulp.dest('dist'));
 });
 
-//Run jasmine tests.
-gulp.task('jasmine', function () {
+/**
+ * @name js:test
+ * @description Run unit tests.
+ */
+gulp.task('js:test', function () {
     gulp.src(testFile)
 		.pipe(jasmine());
 });
 
-//Run  JsHint.
-gulp.task('jshint', function () {
+/**
+ * @name js:hint
+ * @description Run js-hint for source file.
+ */
+gulp.task('js:hint', function () {
     gulp.src(sourceFilePath)
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'))

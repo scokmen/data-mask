@@ -1,18 +1,25 @@
 {
   "name": "data-mask",
   "version": "0.0.4",
+  "description": "A small string masking library in javascript.",
+  "main": "dist/data-mask.min.js",
+  "license": "MIT",
   "homepage": "https://github.com/scokmen/data-mask#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scokmen/data-mask.git"
+  },
   "authors": [
     "Soner Çökmen <sonercokmen@gmail.com>"
   ],
-  "description": "A small string masking library in javascript.",
-  "main": "src/data-mask.js",
   "keywords": [
     "data",
     "string",
-    "mask"
+    "masking"
   ],
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scokmen/data-mask/issues"
+  },
   "ignore": [
     "node_modules",
     "bower_components",
