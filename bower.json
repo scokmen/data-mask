@@ -1,7 +1,7 @@
 {
   "name": "data-mask",
   "version": "0.0.4",
-  "description": "A small string masking library in javascript.",
+  "description": "dependency free string masking library",
   "main": "dist/data-mask.min.js",
   "license": "MIT",
   "homepage": "https://github.com/scokmen/data-mask#readme",

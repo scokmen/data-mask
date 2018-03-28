@@ -1,0 +1,29 @@
+{
+  "extends": "airbnb-base/legacy",
+  "globals": {
+    "define": true,
+    "module": true
+  },
+  "rules": {
+    "no-new": "off",
+    "new-cap": "off",
+    "no-return-await": "off",
+    "eol-last": "off",
+    "linebreak-style": "off",
+    "quote-props": "off",
+    "no-param-reassign": "off",
+    "arrow-body-style": "off",
+    "no-useless-constructor": "off",
+    "newline-per-chained-call": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "padded-blocks": "off",
+    "no-console": "off",
+    "import/no-extraneous-dependencies": "off",
+    "max-len": [ "error", 150 ],
+    "class-methods-use-this": "off",
+    "indent": [ "error", 2 ],
+    "quotes": [ "error", "single" ],
+    "comma-dangle": [ "error", "never" ]
+  }
+}

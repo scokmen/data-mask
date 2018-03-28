@@ -1,5 +1,5 @@
 # data-mask
-A small string masking library in javascript.
+Dependency free string masking library
 
 [![GitHub version](https://badge.fury.io/gh/scokmen%2Fdata-mask.svg)](https://badge.fury.io/gh/scokmen%2Fdata-mask)
 [![npm version](https://badge.fury.io/js/data-mask.svg)](http://badge.fury.io/js/data-mask)
@@ -11,17 +11,17 @@ A small string masking library in javascript.
 
 **Bower:**
 
-```javascript
+```bash
 $ bower install data-mask
 ```
 
 **Npm:**
 
-```javascript
+```bash
 $ npm install data-mask
 ```
 
-# Documentation
+# Usage
 
  **Use it by using DataMasker instance with plain text:**
 

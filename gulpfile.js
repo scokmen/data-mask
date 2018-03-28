@@ -1,12 +1,12 @@
-var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var jasmine = require('gulp-jasmine');
-var jshint = require('gulp-jshint');
+const gulp = require('gulp');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const jasmine = require('gulp-jasmine');
+const jshint = require('gulp-jshint');
 
-var testFile = './spec/data-mask.spec.js';
-var sourceFilePath = './src/data-mask.js';
-var destinationFileName = 'data-mask.min.js';
+const testFile = './spec/data-mask.spec.js';
+const sourceFilePath = './src/data-mask.js';
+const destinationFileName = 'data-mask.min.js';
 
 /**
  * @name js:build

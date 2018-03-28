@@ -11,3 +11,10 @@ config.gypi
 CVS
 npm-debug.log
 bower.json
+node_modules
+.nyc_output
+coverage
+test
+spec
+.idea
+.idea_modules
